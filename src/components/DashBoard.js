@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import data from "../db/articles.json";
+import axios from "axios";
 
 class DashBoard extends Component {
     constructor(props){
@@ -21,13 +21,20 @@ class DashBoard extends Component {
             index:0
             
         };
-        this.state.data = data.filter(item => 
-             (+item.no.split(" ")[0]) >= this.state.min && (+item.no.split(" ")[0])<= this.state.max && item.show )
-        this.state.totalno = this.state.data.length 
+        // this.state.data = data.filter(item => 
+        //      (+item.no.split(" ")[0]) >= this.state.min && (+item.no.split(" ")[0])<= this.state.max && item.show )
+        // this.state.totalno = this.state.data.length 
      }
 
     componentDidMount(){
-        this.onNext()
+        axios.get('https://gist.githubusercontent.com/harsh0907/191b6ba5758ce19576b9fb3f96cb3b01/raw/bd00a1f77bebfc0a8ba224e0b3b53235d7500878/article.json')
+        .then(res => {
+            let yu = res.data.filter(item => 
+                (+item.no.split(" ")[0]) >= this.state.min && (+item.no.split(" ")[0])<= this.state.max && item.show )
+           this.setState({totalno:yu.length, data:yu})
+           this.onNext()
+        })
+        
     }
 
     onInput1Change(value){ 

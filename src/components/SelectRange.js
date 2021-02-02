@@ -26,7 +26,7 @@ class SelectRange extends Component {
     }
 
     onSubmit(){
-        if((this.state.max > 395 || this.state.min < 1) && this.state.max<this.state.min)
+        if(this.state.max > 395 || this.state.min < 1 || this.state.max<this.state.min)
           this.setState({disable:true})
         else 
           this.props.submit(this.state.min, this.state.max, this.state.check?0:1) 
